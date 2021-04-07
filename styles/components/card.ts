@@ -20,9 +20,16 @@ export const cardStyle = StyleSheet.create({
   text: {
     flexGrow: 1
   },
-  title: {},
-  sub: {},
+  title: {
+    fontSize: 14,
+  },
+  sub: {
+    fontSize: 11,
+    color: neutral[500]
+  },
   amount: {
+    fontSize: 20,
+    lineHeight: 24,
     flexGrow: 0
   }
 })

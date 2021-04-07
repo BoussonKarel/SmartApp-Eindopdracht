@@ -5,16 +5,16 @@ import { appStyle } from '../../styles/generic';
 import Card from '../../components/Card';
 
 const Products = ({ navigation } : any) => {
+  const detail = () => {
+    navigation.navigate('ProductDetail');
+  }
+
   return (
     <View style={appStyle.container}>
-      <Card type="product" title="Productnaam" sub="SKU" amount="€ 250,00" />
-      <Card type="product" title="Productnaam" sub="SKU" amount="€ 250,00" />
-      <Card type="product" title="Productnaam" sub="SKU" amount="€ 250,00" />
-      <Card type="product" title="Productnaam" sub="SKU" amount="€ 250,00" />
-
-      <TouchableOpacity onPress={()=> {navigation.navigate('ProductDetail')}}>
-        <Text>Click for detail</Text>
-      </TouchableOpacity>
+      <Card onPress={detail} type="product" title="Productnaam" sub="SKU" amount="5" />
+      <Card onPress={detail} type="product" title="Productnaam" sub="SKU" amount="4" />
+      <Card onPress={detail} type="product" title="Productnaam" sub="SKU" amount="5" />
+      <Card onPress={detail} type="product" title="Productnaam" sub="SKU" amount="11" />
     </View>
   )
 }

@@ -3,6 +3,7 @@ import { theme } from "./utils/colors";
 
 export const appStyle = StyleSheet.create({
   container: {
-    paddingTop: 8,
+    backgroundColor: theme[100]
+    // paddingTop: 8,
   },
 });

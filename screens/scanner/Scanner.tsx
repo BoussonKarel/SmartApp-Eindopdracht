@@ -3,12 +3,14 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { appStyle } from '../../styles/generic';
 
 const Scanner = ({ navigation } : any) => {
+  const detail = () => {
+    navigation.navigate('ProductDetail');
+  }
+
   return (
     <View style={appStyle.container}>
-        <Text>Scanner</Text>
-
-        <TouchableOpacity onPress={()=> {navigation.navigate('ProductDetail')}}>
-          <Text>Click for detail</Text>
+        <TouchableOpacity onPress={detail}>
+          <Text>Click to scan</Text>
         </TouchableOpacity>
     </View>
   )
