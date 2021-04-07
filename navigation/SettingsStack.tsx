@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 const ScannerStack = ({ navigation } : any) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Instellingen" component={Settings} />
+      <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   )
 }

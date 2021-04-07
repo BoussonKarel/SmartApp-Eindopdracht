@@ -9,8 +9,8 @@ const Stack = createStackNavigator();
 const KitStack = ({ navigation } : any) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Bestellingen" component={Orders} />
-      <Stack.Screen name="Order picking" component={OrderPicking} />
+      <Stack.Screen name="Orders" component={Orders} />
+      <Stack.Screen name="OrderPicking" component={OrderPicking} />
     </Stack.Navigator>
   )
 }

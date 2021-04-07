@@ -10,7 +10,7 @@ const ScannerStack = ({ navigation } : any) => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Scanner" component={Scanner} />
-      <Stack.Screen name="Product detail" component={ProductDetail} />
+      <Stack.Screen name="ProductDetail" component={ProductDetail} />
     </Stack.Navigator>
   )
 }

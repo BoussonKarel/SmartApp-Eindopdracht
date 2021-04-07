@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 const Products = ({ navigation } : any) => {
   return (
     <View>
         <Text>Products</Text>
+
+        <TouchableOpacity onPress={()=> {navigation.navigate('ProductDetail')}}>
+          <Text>Click for detail</Text>
+        </TouchableOpacity>
     </View>
   )
 }

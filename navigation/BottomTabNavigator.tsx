@@ -7,19 +7,75 @@ import KitStack from './KitStack';
 import ScannerStack from './ScannerStack';
 import OrderStack from './OrderStack';
 import SettingsStack from './SettingsStack';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { neutral, theme } from '../styles/utils/colors';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Producten" component={ProductStack} />
-        <Tab.Screen name="Kits" component={KitStack} />
-        <Tab.Screen name="Scanner" component={ScannerStack} />
-        <Tab.Screen name="Bestellingen" component={OrderStack} />
-        <Tab.Screen name="Instellingen" component={SettingsStack} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator
+      
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+
+          switch (route.name) {
+            case 'Products':
+              return <MaterialCommunityIcons name="archive" color={color} size={size} />
+            case 'Kits':
+              return <MaterialCommunityIcons name="cube" color={color} size={size} />
+            case 'Scanner':
+              return <MaterialCommunityIcons name="barcode-scan" color={color} size={size} />
+            case 'Orders':
+              return <MaterialIcons name="receipt" color={color} size={size} />
+            case 'Settings':
+              return <MaterialIcons name="settings" color={color} size={size} />
+            default:
+              return <MaterialIcons name="help" color={color} size={size} />
+          }
+        }
+      })}
+
+      // Wrapper rond Screen content 
+      sceneContainerStyle={{}}
+
+      //
+      tabBarOptions={{
+        activeTintColor: theme[900],
+        inactiveTintColor: neutral[500],
+        // activeBackgroundColor: '',
+        // inactiveBackgroundColor: '',
+        tabStyle: {
+          // Style voor 1 tab item
+        },
+        showLabel: false,
+      }}
+    >
+      <Tab.Screen
+        name="Products"
+        component={ProductStack}
+      />
+
+      <Tab.Screen
+        name="Kits"
+        component={KitStack}
+      />
+
+      <Tab.Screen
+        name="Scanner"
+        component={ScannerStack}
+      />
+
+      <Tab.Screen
+        name="Orders"
+        component={OrderStack}
+      />
+
+      <Tab.Screen
+        name="Settings"
+        component={SettingsStack}
+      />
+    </Tab.Navigator>
   );
 }
