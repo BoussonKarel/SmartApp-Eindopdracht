@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const neutral = {
   100 : '#FFFFFF',
+  300 : '#E3E3E3',
   500 : '#757575',
   900 : '#0D0D0D',
 };
