@@ -9,13 +9,13 @@ import OrderStack from './OrderStack';
 import SettingsStack from './SettingsStack';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { neutral, theme } from '../styles/utils/colors';
+import { navigationStyle } from '../styles/components/navigation';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
   return (
     <Tab.Navigator
-      
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
@@ -46,9 +46,8 @@ export default function BottomTabNavigator() {
         inactiveTintColor: neutral[500],
         // activeBackgroundColor: '',
         // inactiveBackgroundColor: '',
-        tabStyle: {
-          // Style voor 1 tab item
-        },
+        style: {...navigationStyle.tab},
+        tabStyle: {...navigationStyle.tab},
         showLabel: false,
       }}
     >
