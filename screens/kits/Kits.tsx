@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Container from '../../components/Container';
 import { appStyle } from '../../styles/generic';
 
 const Kits = ({ navigation } : any) => {
