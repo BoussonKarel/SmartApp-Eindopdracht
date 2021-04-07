@@ -18,8 +18,6 @@ export default function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-
           switch (route.name) {
             case 'Products':
               return <MaterialCommunityIcons name="archive" color={color} size={size} />
