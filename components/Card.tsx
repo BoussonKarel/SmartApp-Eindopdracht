@@ -21,19 +21,17 @@ const Card = ({ onPress, type, title, sub, amount } : any) => {
     default:
       iconName = 'help';
       break;
-  }
+  } 
 
   return (
-    <TouchableNativeFeedback onPress={onPress}>
-      <View style={cardStyle.card}>
-        <MaterialCommunityIcons style={cardStyle.icon} name={iconName} size={24} color={neutral[500]} />
-        <View style={cardStyle.text}>
-          <Text style={cardStyle.title}>{title}</Text>
-          <Text style={cardStyle.sub}>{sub}</Text>
-        </View>
-        <Text style={cardStyle.amount}>{amount}</Text>
+    <View style={cardStyle.card}>
+      <MaterialCommunityIcons style={cardStyle.icon} name={iconName} size={24} color={neutral[500]} />
+      <View style={cardStyle.text}>
+        <Text style={cardStyle.title}>{title}</Text>
+        <Text style={cardStyle.sub}>{sub}</Text>
       </View>
-    </TouchableNativeFeedback>
+      <Text style={cardStyle.amount}>{amount}</Text>
+    </View>
   )
 }
 
