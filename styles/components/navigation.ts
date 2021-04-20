@@ -8,8 +8,11 @@ export const navigationStyle = StyleSheet.create({
   tabItem: {
 
   },
-  tabScanner: {
-    // idk how to do this
+  scannerIcon: {
+    backgroundColor: theme[900],
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    borderRadius: 50,
   },
   header: {
     // stack nav header
@@ -20,5 +23,5 @@ export const navigationStyle = StyleSheet.create({
     fontWeight: '500', // Rendert niet in 500?
     fontSize: 20,
     color: neutral[100]
-  }
+  },
 })

@@ -24,7 +24,7 @@ export default function BottomTabNavigator() {
             case 'Kits':
               return <MaterialCommunityIcons name="cube" color={color} size={size} />
             case 'Scanner':
-              return <MaterialCommunityIcons name="barcode-scan" color={color} size={size} />
+              return <MaterialCommunityIcons style={navigationStyle.scannerIcon} name="barcode-scan" color={"white"} size={size} />
             case 'Orders':
               return <MaterialIcons name="receipt" color={color} size={size} />
             case 'Settings':

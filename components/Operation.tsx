@@ -6,7 +6,7 @@ import { cardStyle } from '../styles/components/card';
 import { operationStyle } from '../styles/components/operation';
 import { neutral, theme } from '../styles/utils/colors';
 
-const Card = ({ onPress, type, title, sub, amount } : any) => {
+const Operation = () => {
   return (
     <View style={operationStyle.card}>
       <View style={operationStyle.container}>
@@ -25,4 +25,4 @@ const Card = ({ onPress, type, title, sub, amount } : any) => {
   )
 }
 
-export default Card;
+export default Operation;

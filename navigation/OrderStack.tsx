@@ -5,10 +5,18 @@ import Orders from '../screens/orders/Orders';
 import OrderPicking from '../screens/orders/OrderPicking';
 import { navigationStyle } from '../styles/components/navigation';
 import { neutral } from '../styles/utils/colors';
+import { useFocusEffect } from '@react-navigation/core';
 
 const Stack = createStackNavigator();
 
 const KitStack = ({ navigation } : any) => {
+  // useFocusEffect(
+  //   // Hook dat als je naar hier gaat, je op de homepage komt
+    
+  // ); 
+
+  
+
   return (
     <Stack.Navigator
       screenOptions={{
