@@ -35,6 +35,7 @@ const Scanner = ({ navigation } : any) => {
     setTimeout(() => { setScanned(false) }, 1000);
   }
 
+  // TODO: Animation of the page turning blue from the bottom
   return (
     <View style={scannerStyle.card}>
       <BarCodeScanner style={scannerStyle.big} onBarCodeScanned={scanned ? undefined : handleBarcodeScanned} />
