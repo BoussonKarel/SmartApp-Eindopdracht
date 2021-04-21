@@ -42,14 +42,24 @@ const KitPicking = ({ navigation } : any) => {
         <View style={[scannerStyle.card, scannerStyle.smallContainer]}>
           <Camera onBarCodeScanned={handleBarcodeScanned} style={scannerStyle.small} />
         </View>
-        <Card style={pickingStyle.pickingItem} type="order" title="Productnaam" sub="SKU" amount="11" />
+        <Card
+          style={pickingStyle.pickingItem}
+          type="kit"
+          title="Kit Energierichting"
+          sub="KIT-ENERGIE"
+          amount="0 / 4"
+          complete={false} 
+        />
+
         <View style={pickingStyle.pickingList} >
-          <Card type="product" title="Productnaam" sub="SKU" amount="11" />
-          <Card type="product" title="Productnaam" sub="SKU" amount="11" />
-          <Card type="product" title="Productnaam" sub="SKU" amount="11" />
+          <Card type="product" title="Arduino UNO" sub="ARD-UNO-R3" amount="0 / 1" complete={false} />
+          <Card type="product" title="Resistor pakket - Klein" sub="PAK-RES-11" amount="0 / 1" complete={false} />
+          <Card type="product" title="LED pakket (5 x 5 kleuren)" sub="PAK-LED-5x5" amount="0 / 2" complete={false}  />
+          <Card type="product" title="RGB LED (CC)" sub="LED-RGB-CC" amount="1 / 2" complete={false}  />
         </View>
+
         <View style={pickingStyle.buttonHolder}>
-          <Button color={theme[900]} title="Volgende" onPress={() => {console.log("SAVE")}} />
+          <Button disabled color={theme[900]} title="DONE" onPress={() => {console.log("KIT KLAAR")}} />
         </View>
     </View>
   )

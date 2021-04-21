@@ -5,7 +5,7 @@ import { TouchableHighlight, TouchableNativeFeedback, TouchableOpacity } from 'r
 import { cardStyle } from '../styles/components/card';
 import { neutral } from '../styles/utils/colors';
 
-const Card = ({ onPress, type, title, sub, amount } : any) => {
+const Card = ({ onPress, type, title, sub, amount, complete = true } : any) => {
   let iconName : any;
 
   switch (type) {
@@ -30,7 +30,7 @@ const Card = ({ onPress, type, title, sub, amount } : any) => {
         <Text style={cardStyle.title}>{title}</Text>
         <Text style={cardStyle.sub}>{sub}</Text>
       </View>
-      <Text style={cardStyle.amount}>{amount}</Text>
+      <Text style={complete ? cardStyle.amount : [cardStyle.amount, {color: "red"}]}>{amount}</Text>
     </View>
   )
 }

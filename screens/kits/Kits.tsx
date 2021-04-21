@@ -6,7 +6,7 @@ import { appStyle } from '../../styles/generic';
 
 const Kits = ({ navigation } : any) => {
   const detail = () => {
-    navigation.navigate('KitPicking');
+    navigation.navigate('Kit picking');
   }
 
   return (

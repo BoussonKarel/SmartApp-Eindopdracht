@@ -7,7 +7,7 @@ import { appStyle } from '../../styles/generic';
 
 const Scanner = ({ navigation } : any) => {
   const detail = (sku : string) => {
-    navigation.navigate('ProductDetail', {sku: sku});
+    navigation.navigate('Product detail', {sku: sku});
   }
 
   const [hasPermission, setHasPermission] = useState<boolean|any>(null);

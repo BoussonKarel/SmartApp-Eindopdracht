@@ -26,7 +26,7 @@ const KitStack = ({ navigation } : any) => {
       }}
     >
       <Stack.Screen name="Orders" component={Orders} />
-      <Stack.Screen name="OrderPicking" component={OrderPicking} />
+      <Stack.Screen name="Order picking" component={OrderPicking} />
     </Stack.Navigator>
   )
 }

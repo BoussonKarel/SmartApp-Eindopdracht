@@ -8,7 +8,7 @@ import Product from '../../models/Product';
 
 const Products = ({ navigation } : any) => {
   const detail = (sku : string) => {
-    navigation.navigate('ProductDetail', {sku: sku});
+    navigation.navigate('Product detail', {sku: sku});
   }
 
   return (

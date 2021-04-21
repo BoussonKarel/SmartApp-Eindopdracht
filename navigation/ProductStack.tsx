@@ -18,7 +18,7 @@ const ProductStack = ({ navigation } : any) => {
       }}
     >
       <Stack.Screen name="Products" component={Products} />
-      <Stack.Screen name="ProductDetail" component={ProductDetail} />
+      <Stack.Screen name="Product detail" component={ProductDetail} />
     </Stack.Navigator>
   )
 }

@@ -28,6 +28,7 @@ export const cardStyle = StyleSheet.create({
     color: neutral[500]
   },
   amount: {
+    color: neutral[900],
     fontSize: 20,
     lineHeight: 24,
     flexGrow: 0

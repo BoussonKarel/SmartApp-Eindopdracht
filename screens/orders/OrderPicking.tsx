@@ -42,14 +42,22 @@ const OrderPicking = ({ navigation } : any) => {
         <View style={[scannerStyle.card, scannerStyle.smallContainer]}>
           <Camera onBarCodeScanned={handleBarcodeScanned} style={scannerStyle.small} />
         </View>
-        <Card style={pickingStyle.pickingItem} type="order" title="Productnaam" sub="SKU" amount="11" />
+        <Card
+          style={pickingStyle.pickingItem}
+          type="order"
+          title="Jan Vermander"
+          sub="21 apr. 2021"
+          amount="1 / 2"
+          complete={false} 
+        />
+
         <View style={pickingStyle.pickingList} >
-          <Card type="product" title="Productnaam" sub="SKU" amount="11" />
-          <Card type="product" title="Productnaam" sub="SKU" amount="11" />
-          <Card type="product" title="Productnaam" sub="SKU" amount="11" />
+          <Card type="product" title="Kit Energierichting" sub="KIT-ENERGIE" amount="1 / 1" />
+          <Card type="product" title="Resistor pakket - Klein" sub="PAK-RES-11" amount="0 / 1" complete={false} />
         </View>
+
         <View style={pickingStyle.buttonHolder}>
-          <Button color={theme[900]} title="Volgende" onPress={() => {console.log("SAVE")}} />
+          <Button disabled color={theme[900]} title="NEXT" onPress={() => {console.log("ORDER PICKED")}} />
         </View>
     </View>
   )

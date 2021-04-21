@@ -10,5 +10,11 @@ export const pickingStyle = StyleSheet.create({
   buttonHolder: {
     marginTop: 8,
     marginHorizontal: 16,
+  },
+  complete: {
+    color: "green"
+  },
+  incomplete: {
+    color: "red"
   }
 })

@@ -6,7 +6,7 @@ import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 
 const Orders = ({ navigation } : any) => {
   const detail = () => {
-    navigation.navigate('OrderPicking');
+    navigation.navigate('Order picking');
   }
 
   return (
