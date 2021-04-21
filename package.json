@@ -14,6 +14,7 @@
     "@react-navigation/material-bottom-tabs": "^5.3.15",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
+    "@woocommerce/woocommerce-rest-api": "^1.0.1",
     "expo": "~40.0.0",
     "expo-barcode-scanner": "~9.1.0",
     "expo-camera": "~9.1.0",
@@ -27,13 +28,14 @@
     "react-native-responsive-screen": "^1.4.2",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
+    "@types/woocommerce__woocommerce-rest-api": "^1.0.1",
     "typescript": "~4.0.0"
   },
   "private": true
