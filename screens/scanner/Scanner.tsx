@@ -1,12 +1,13 @@
-import { BarCodeScanner, BarCodeScannerResult } from 'expo-barcode-scanner';
+import { Camera } from 'expo-camera';
+import { BarCodeScannerResult } from 'expo-barcode-scanner';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, Vibration } from 'react-native';
 import { scannerStyle } from '../../styles/components/scanner';
 import { appStyle } from '../../styles/generic';
 
 const Scanner = ({ navigation } : any) => {
-  const detail = () => {
-    navigation.navigate('ProductDetail');
+  const detail = (sku : string) => {
+    navigation.navigate('ProductDetail', {sku: sku});
   }
 
   const [hasPermission, setHasPermission] = useState<boolean|any>(null);
@@ -15,7 +16,7 @@ const Scanner = ({ navigation } : any) => {
   // Permission for BarcodeScanner
   useEffect(() => {
     (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -29,7 +30,7 @@ const Scanner = ({ navigation } : any) => {
     Vibration.vibrate()
     
     // Product detail page
-    detail();
+    detail(data);
 
     // After 1 second, reset the scanner
     setTimeout(() => { setScanned(false) }, 1000);
@@ -38,7 +39,10 @@ const Scanner = ({ navigation } : any) => {
   // TODO: Animation of the page turning blue from the bottom
   return (
     <View style={scannerStyle.card}>
-      <BarCodeScanner style={scannerStyle.big} onBarCodeScanned={scanned ? undefined : handleBarcodeScanned} />
+      <Camera
+        style={scannerStyle.big}
+        onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
+      />
     </View>
   )
 }

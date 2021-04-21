@@ -21,16 +21,5 @@ export const operationStyle = StyleSheet.create({
   },
   amount: {
     fontSize: 51,
-  },
-  button: {
-    paddingVertical: 8,
-    backgroundColor: theme[900]
-  },
-  buttonText: {
-    textAlign: "center",
-    fontSize: 14,
-    lineHeight: 16,
-    color: neutral[100],
-    fontWeight: "bold",
   }
 })

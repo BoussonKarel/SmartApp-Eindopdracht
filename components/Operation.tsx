@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 import { TouchableHighlight, TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler';
 import { cardStyle } from '../styles/components/card';
 import { operationStyle } from '../styles/components/operation';
@@ -18,9 +18,7 @@ const Operation = () => {
           <MaterialIcons style={operationStyle.operation} name="add" size={64} color={theme[900]} />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={operationStyle.button} onPress={() => {console.log("SAVE")}}>
-        <Text style={operationStyle.buttonText}>SAVE</Text>
-      </TouchableOpacity>
+      <Button color={theme[900]} title="SAVE" onPress={() => {console.log("SAVE")}} />
     </View>
   )
 }

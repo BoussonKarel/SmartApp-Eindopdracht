@@ -17,19 +17,10 @@ export const scannerStyle = StyleSheet.create({
     width: "100%",
   },
   smallContainer: {
-    display: "block",
-    height: 128,
-    overflow: "hidden"
+    height: 256,
   },
   small: {
     height: "100%",
-    width: "100%",
-    marginHorizontal: 0,
-    marginLeft: 0,
-    marginStart: 0,
-    paddingHorizontal: 0,
-    paddingLeft: 0,
-    paddingStart: 0,
-    padding: 0
+    width: "auto",
   }
 })
