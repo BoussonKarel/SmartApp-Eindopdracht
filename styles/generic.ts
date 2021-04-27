@@ -6,10 +6,8 @@ export const appStyle = StyleSheet.create({
     backgroundColor: theme[100]
     // paddingTop: 8,
   },
-  activityIndicator: {
+  loadingContainer: {
     marginTop: "auto",
     marginBottom: "auto",
-    marginLeft: "auto",
-    marginRight: "auto",
   }
 });

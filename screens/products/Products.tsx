@@ -5,8 +5,10 @@ import { appStyle } from '../../styles/generic';
 import Card from '../../components/Card';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Product from '../../models/Product';
-import { getProducts } from '../../utils/WooCommerce';
+import { woocommerce } from '../../utils/WooCommerce';
 import { theme } from '../../styles/utils/colors';
+import * as Haptics from 'expo-haptics';
+import Loading from '../../components/Loading';
 
 const Products = ({ navigation } : any) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -15,39 +17,40 @@ const Products = ({ navigation } : any) => {
     navigation.navigate('Product detail', params);
   }
 
-  useEffect(() => {
+  const getProducts = () => {
     setLoading(true);
+
+    woocommerce.get.products()
+    .then(response => {
+      console.log(response);
+      setLoading(false);
+    });
+  }
+
+  useEffect(() => {
     getProducts();
-    getProducts({sku: "ARD-PRO-MICRO"});
-    setLoading(false);
   }, [])
 
-  if (loading)
-    return (
-      <View style={appStyle.container}>
-        <ActivityIndicator style={appStyle.activityIndicator} size="large" color={theme[900]} />
-      </View>
-      )
-  else
-    return (
-      <View style={appStyle.container}>
-        <TouchableNativeFeedback onPress={() => {detail({sku: "howest-mct-rpi"})}}>
-          <Card type="product" title="Productnaam" sub="SKU" amount="5" />
-        </TouchableNativeFeedback>
+  if (loading) return ( <Loading /> )
+  else return (
+    <View style={appStyle.container}>
+      <TouchableNativeFeedback onPress={() => {detail({sku: "howest-mct-rpi"})}}>
+        <Card type="product" title="Productnaam" sub="SKU" amount="5" />
+      </TouchableNativeFeedback>
 
-        <TouchableNativeFeedback onPress={() => {detail({sku: "test"})}}>
-          <Card type="product" title="Productnaam" sub="SKU" amount="4" />
-        </TouchableNativeFeedback>
+      <TouchableNativeFeedback onPress={() => {detail({sku: "test"})}}>
+        <Card type="product" title="Productnaam" sub="SKU" amount="4" />
+      </TouchableNativeFeedback>
 
-        <TouchableNativeFeedback onPress={() => {detail({sku: "abcdef"})}}>
-          <Card type="product" title="Productnaam" sub="SKU" amount="5" />
-        </TouchableNativeFeedback>
+      <TouchableNativeFeedback onPress={() => {detail({sku: "abcdef"})}}>
+        <Card type="product" title="Productnaam" sub="SKU" amount="5" />
+      </TouchableNativeFeedback>
 
-        <TouchableNativeFeedback onPress={() => {detail({sku: "123456"})}}>
-          <Card onPress={detail} type="product" title="Productnaam" sub="SKU" amount="11" />
-        </TouchableNativeFeedback>
-      </View>
-    )
+      <TouchableNativeFeedback onPress={() => {detail({sku: "123456"})}}>
+        <Card onPress={detail} type="product" title="Productnaam" sub="SKU" amount="11" />
+      </TouchableNativeFeedback>
+    </View>
+  )
 }
 
 export default Products;

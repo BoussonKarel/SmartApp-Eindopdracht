@@ -1,66 +1,99 @@
 import { BarCodeScannerResult } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
 import React, { useEffect, useState } from 'react';
-import { View, Vibration, Button } from 'react-native';
+import { View, Vibration, Button, Text } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Card from '../../components/Card';
+import Order from '../../models/Order';
+import OrderItem from '../../models/OrderItem';
 import { pickingStyle } from '../../styles/components/picking';
 import { scannerStyle } from '../../styles/components/scanner';
 import { appStyle } from '../../styles/generic';
 import { theme } from '../../styles/utils/colors';
+import { createOrderObject } from '../../utils/order';
+import { feedback } from '../../utils/ux';
 
-const OrderPicking = ({ navigation } : any) => {
-  const [hasPermission, setHasPermission] = useState<boolean|any>(null);
-  const [lastBarCode, setLastBarCode] = useState<string|null>(null);
+const OrderPicking = ({ route, navigation } : any) => {
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
 
-  // Permission for BarcodeScanner
+  const [order, setOrder] = useState<Order|null>(null);
+  const [picked, setPicked] = useState<number>(0);
+
+  const [scanned, setScanned] = useState<boolean>(false);
+
   useEffect(() => {
+    // Permission for BarcodeScanner
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
+    
+    // Current order
+    route.params.order
+    ? setOrder(route.params.order)
+    : console.error("No order given!")
   }, []);
 
   // Barcode has been scanned
   const handleBarcodeScanned = ({ type, data } : BarCodeScannerResult) => {
-    // Make sure the barcode isn't scanned twice
-    if (data != lastBarCode) {
-      setLastBarCode(data);
-      // After 1s, the same barcode can be scanned again
-      setTimeout(() => { setLastBarCode(null) }, 1000);
+    setScanned(true);
+    setTimeout(() => { setScanned(false) }, 1000);
 
-      // Feedback
-      console.log("Scanned product, code: " + data)
-      Vibration.vibrate()
+    // Add 1 to the picked items
+    let item : OrderItem | undefined = order?.order_items.find((o: OrderItem) => o.sku == data);
+    if(item) {
+      if (item.picked_quantity != item.quantity) {
+        feedback.userSuccess(`Picked [${data}]`); // Feedback (UX)
+        item.picked_quantity += 1;
+        setPicked(picked => (picked+1))
+      }
+      else {
+        feedback.warning("Item already fully picked!")
+      }
     }
-    else {
-      console.log("Wait before scanning the same thing again")
-    }
+    else
+      feedback.error("Barcode not in order!")
   }
 
-  return (
-    <View style={appStyle.container}>
+  if (order)
+    return (
+      <View style={appStyle.container}>
         <View style={[scannerStyle.card, scannerStyle.smallContainer]}>
-          <Camera onBarCodeScanned={handleBarcodeScanned} style={scannerStyle.small} />
+          <Camera onBarCodeScanned={scanned ? undefined : handleBarcodeScanned} style={scannerStyle.small} />
         </View>
+
         <Card
           style={pickingStyle.pickingItem}
           type="order"
-          title="Jan Vermander"
-          sub="21 apr. 2021"
-          amount="1 / 2"
-          complete={false} 
+          title={order.full_name}
+          sub={order.order_date}
+          amount={`${picked} / ${order.order_items.length}`}
+          complete={picked == order.order_items.length} 
         />
 
         <View style={pickingStyle.pickingList} >
-          <Card type="product" title="Kit Energierichting" sub="KIT-ENERGIE" amount="1 / 1" />
-          <Card type="product" title="Resistor pakket - Klein" sub="PAK-RES-11" amount="0 / 1" complete={false} />
+          { order.order_items.map((i: OrderItem) => (
+            <Card
+              key={i.id}
+              type="product"
+              title={i.name}
+              sub={i.sku}
+              amount={`${i.picked_quantity} / ${i.quantity}`}
+              complete={i.picked_quantity == i.quantity} 
+            />
+          ))}
         </View>
 
         <View style={pickingStyle.buttonHolder}>
           <Button disabled color={theme[900]} title="NEXT" onPress={() => {console.log("ORDER PICKED")}} />
         </View>
-    </View>
-  )
+      </View>
+    )
+  else
+    return (
+      <Text>Geen order!</Text>
+    )
+
 }
 
 export default OrderPicking;

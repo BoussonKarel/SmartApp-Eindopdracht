@@ -1,31 +1,57 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
 import Card from '../../components/Card';
 import { appStyle } from '../../styles/generic';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { woocommerce } from '../../utils/WooCommerce';
+import Order from '../../models/Order';
+import { createOrderObject } from '../../utils/order';
+import Loading from '../../components/Loading';
 
 const Orders = ({ navigation } : any) => {
-  const detail = () => {
-    navigation.navigate('Order picking');
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const detail = ( order : Order ) => {
+    navigation.navigate('Order picking', { order: order });
   }
 
-  return (
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  const getOrders = async () => {
+    setLoading(true);
+
+    woocommerce.get.orders()
+    .then(response => {
+      const orderList : Order[] = [];
+
+      for (let order of response) {
+        orderList.push(createOrderObject(order));
+      }
+
+      setOrders(orderList);
+
+      // Stop the loading indicator
+      setLoading(false);
+    });
+  }
+
+  useEffect(() => {
+    getOrders();
+  }, [])
+
+  if (loading) return ( <Loading />)
+  else if (orders?.length < 1) return (
     <View style={appStyle.container}>
-      <TouchableNativeFeedback onPress={detail}>
-        <Card type="order" title="Henk de Kleine" sub="29 mrt. 2021" amount="€ 420,00" />
-      </TouchableNativeFeedback>
-
-      <TouchableNativeFeedback onPress={detail}>
-        <Card type="order" title="Jan Van Langeghem" sub="29 mrt. 2021" amount="€ 69,99" />
-      </TouchableNativeFeedback>
-
-      <TouchableNativeFeedback onPress={detail}>
-        <Card type="order" title="Stella Van Biervliet" sub="30 mrt. 2021" amount="€ 77,77" />
-      </TouchableNativeFeedback>
-
-      <TouchableNativeFeedback onPress={detail}>
-        <Card type="order" title="Roekoe Postduif" sub="1 apr. 2021" amount="€ 9000,00" />
-      </TouchableNativeFeedback>
+      <Text>Geen orders gevonden!</Text>
+    </View>
+  )
+  else return (
+    <View style={appStyle.container}>
+      { orders.map((o: Order) => (
+        <TouchableNativeFeedback key={o.id} onPress={() => { detail(o) }}>
+          <Card type="order" title={o.full_name} sub={o.order_date} amount={`€ ${o.total}`} />
+        </TouchableNativeFeedback>
+      ))}
     </View>
   )
 }
