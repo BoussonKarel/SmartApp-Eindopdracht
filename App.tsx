@@ -1,18 +1,20 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
+import { SnackBarProvider } from './utils/SnackbarProvider';
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default function App() {  
   return (
-    <NavigationContainer>
-      <BottomTabNavigator />
-    </NavigationContainer>
+    <SnackBarProvider>
+      <NavigationContainer>
+        <BottomTabNavigator />
+      </NavigationContainer>
+    </SnackBarProvider>
   );
 }
 

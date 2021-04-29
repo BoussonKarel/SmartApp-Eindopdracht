@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Pressable, Button, Vibration, ActivityIndicator } from 'react-native';
+import { View, Text } from 'react-native';
 import { appStyle } from '../../styles/generic';
 
 import Card from '../../components/Card';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Product from '../../models/Product';
 import { woocommerce } from '../../utils/WooCommerce';
-import { theme } from '../../styles/utils/colors';
-import * as Haptics from 'expo-haptics';
+import { createProductObject } from '../../utils/product';
 import Loading from '../../components/Loading';
+import { useFocusEffect } from '@react-navigation/core';
 
 const Products = ({ navigation } : any) => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const detail = (params: Object) => {
-    navigation.navigate('Product detail', params);
+  const detail = (product: Product) => {
+    navigation.navigate('Product detail', {id: product.id});
   }
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -24,14 +24,25 @@ const Products = ({ navigation } : any) => {
 
     woocommerce.get.products()
     .then(response => {
-      console.log(response);
+      const productList : Product[] = [];
+
+      for (let product of response) {
+        // Only show products with managed stock
+        if (product.manage_stock)
+          productList.push(createProductObject(product));
+      }
+
+      console.log({productList});
+      setProducts(productList);
+
+      // Stop the loading indicator
       setLoading(false);
     });
   }
 
   useEffect(() => {
     getProducts();
-  }, [])
+  }, []);
 
   if (loading) return ( <Loading /> )
   else if (products.length < 1) return (

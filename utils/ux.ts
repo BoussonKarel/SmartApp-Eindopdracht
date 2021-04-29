@@ -1,5 +1,8 @@
 import * as Haptics from 'expo-haptics';
 import { Alert, Vibration } from 'react-native';
+import { useSnackbar } from './SnackbarProvider';
+
+// const snackbar = useSnackbar();
 
 export const feedback = {
   userSuccess: (succesMsg : string = "") => {
@@ -14,7 +17,8 @@ export const feedback = {
   error: (errorMsg : string) => {
     // Snackbar?
     // Toast? Maar afgeraden? Enkel Android?
-    console.error(errorMsg);
+    //snackbar.handleOpen(errorMsg);
+    
     // ContextProvider maken, daarin ux.ts zetten
     // in App.tsx
     // Component Snackbar renderen

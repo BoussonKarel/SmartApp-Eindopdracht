@@ -10,12 +10,7 @@ const ProductDetail = ({ route, navigation } : any) => {
   // Of volledige product doorsturen?
 
   useEffect(() => {
-    if (route.params.sku) {
-      woocommerce.get.products({sku: route.params.sku});
-    }
-    else {
-      console.error("No SKU given!")
-    }
+    // get product by route.params.id
   }, [])
   
   return (

@@ -1,6 +1,6 @@
 import Product from "../models/Product";
 
-export const createOrderObject = (fullProduct : any) : Product => {
+export const createProductObject = (fullProduct : any) : Product => {
   return {
     id: fullProduct.id,
     name: fullProduct.name,
