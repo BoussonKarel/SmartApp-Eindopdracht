@@ -40,9 +40,9 @@ const Orders = ({ navigation } : any) => {
   }, [])
 
   if (loading) return ( <Loading />)
-  else if (orders?.length < 1) return (
+  else if (orders.length < 1) return (
     <View style={appStyle.container}>
-      <Text>Geen orders gevonden!</Text>
+      <Text>No open orders found.</Text>
     </View>
   )
   else return (

@@ -1,9 +1,11 @@
+import { useFocusEffect, useIsFocused } from '@react-navigation/core';
 import { BarCodeScannerResult } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Vibration, Button, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Card from '../../components/Card';
+import Loading from '../../components/Loading';
 import Order from '../../models/Order';
 import OrderItem from '../../models/OrderItem';
 import { pickingStyle } from '../../styles/components/picking';
@@ -15,11 +17,13 @@ import { feedback } from '../../utils/ux';
 
 const OrderPicking = ({ route, navigation } : any) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
+  const [camera, setCamera] = useState<Camera|null>(null);
 
   const [order, setOrder] = useState<Order|null>(null);
-  const [picked, setPicked] = useState<number>(0);
 
   const [scanned, setScanned] = useState<boolean>(false);
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     // Permission for BarcodeScanner
@@ -41,11 +45,13 @@ const OrderPicking = ({ route, navigation } : any) => {
 
     // Add 1 to the picked items
     let item : OrderItem | undefined = order?.order_items.find((o: OrderItem) => o.sku == data);
-    if(item) {
+    if(order && item) {
       if (item.picked_quantity != item.quantity) {
-        feedback.userSuccess(`Picked [${data}]`); // Feedback (UX)
+        feedback.userSuccess(`Picked [${data}]`);
         item.picked_quantity += 1;
-        setPicked(picked => (picked+1))
+
+        // Update the whole order
+        order.picked_items += 1;
       }
       else {
         feedback.warning("Item already fully picked!")
@@ -57,9 +63,19 @@ const OrderPicking = ({ route, navigation } : any) => {
 
   if (order)
     return (
-      <View style={appStyle.container}>
-        <View style={[scannerStyle.card, scannerStyle.smallContainer]}>
-          <Camera onBarCodeScanned={scanned ? undefined : handleBarcodeScanned} style={scannerStyle.small} />
+      <View style={[pickingStyle.container, appStyle.container]}>
+        <View style={[pickingStyle.pickingScanner, scannerStyle.card, scannerStyle.smallContainer]}>
+          {
+            isFocused
+            ?
+            <Camera
+              onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
+              style={scannerStyle.small}
+            />
+            :
+            <Loading />
+          }
+          
         </View>
 
         <Card
@@ -67,12 +83,13 @@ const OrderPicking = ({ route, navigation } : any) => {
           type="order"
           title={order.full_name}
           sub={order.order_date}
-          amount={`${picked} / ${order.order_items.length}`}
-          complete={picked == order.order_items.length} 
+          amount={`${order.picked_items} / ${order.order_items.length}`}
+          complete={order.picked_items == order.order_items.length} 
         />
 
-        <View style={pickingStyle.pickingList} >
-          { order.order_items.map((i: OrderItem) => (
+        <ScrollView style={pickingStyle.pickingList} >
+          {/* Item uit lijst halen indien gepickt */}
+          { order.order_items.filter((i: OrderItem) => i.picked_quantity != i.quantity).map((i: OrderItem) => (
             <Card
               key={i.id}
               type="product"
@@ -82,7 +99,7 @@ const OrderPicking = ({ route, navigation } : any) => {
               complete={i.picked_quantity == i.quantity} 
             />
           ))}
-        </View>
+        </ScrollView>
 
         <View style={pickingStyle.buttonHolder}>
           <Button disabled color={theme[900]} title="NEXT" onPress={() => {console.log("ORDER PICKED")}} />

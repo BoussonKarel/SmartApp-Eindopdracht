@@ -1,14 +1,19 @@
 import { StyleSheet } from "react-native";
 
 export const pickingStyle = StyleSheet.create({
+  container: {
+    maxHeight: "100%",
+  },
+  pickingScanner: {
+  },
   pickingItem: {
     marginTop: 8,
   },
   pickingList: {
-    marginTop: 8
+    marginTop: 8,
   },
   buttonHolder: {
-    marginTop: 8,
+    marginVertical: 8,
     marginHorizontal: 16,
   },
   complete: {

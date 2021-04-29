@@ -1,5 +1,5 @@
 import * as Haptics from 'expo-haptics';
-import { Alert } from 'react-native';
+import { Alert, Vibration } from 'react-native';
 
 export const feedback = {
   userSuccess: (succesMsg : string = "") => {
@@ -9,12 +9,16 @@ export const feedback = {
   },
   userError: (errorMsg : string) => {
     console.error(errorMsg);
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+    Vibration.vibrate(); // welk pattern doet denken aan warning
   },
   error: (errorMsg : string) => {
     // Snackbar?
     // Toast? Maar afgeraden? Enkel Android?
     console.error(errorMsg);
+    // ContextProvider maken, daarin ux.ts zetten
+    // in App.tsx
+    // Component Snackbar renderen
+    // Aansturen via contextprovider
   },
   warning: (errorMsg : string) => {
     Alert.alert(errorMsg);

@@ -29,7 +29,7 @@ export const createOrderObject = (fullOrder : any) : Order => {
     total: fullOrder.total,
     order_date: fullOrder.date_created,
     full_name: `${fullOrder.billing.first_name} ${fullOrder.billing.last_name}`,
-    picked_count: 0,
+    picked_items: 0,
     order_items: orderItems,
   }
 }

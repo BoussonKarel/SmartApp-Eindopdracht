@@ -17,6 +17,8 @@ const Products = ({ navigation } : any) => {
     navigation.navigate('Product detail', params);
   }
 
+  const [products, setProducts] = useState<Product[]>([]);
+
   const getProducts = () => {
     setLoading(true);
 
@@ -32,23 +34,19 @@ const Products = ({ navigation } : any) => {
   }, [])
 
   if (loading) return ( <Loading /> )
+  else if (products.length < 1) return (
+    <View style={appStyle.container}>
+      <Text>No products found.</Text>
+    </View>
+  )
   else return (
     <View style={appStyle.container}>
-      <TouchableNativeFeedback onPress={() => {detail({sku: "howest-mct-rpi"})}}>
-        <Card type="product" title="Productnaam" sub="SKU" amount="5" />
-      </TouchableNativeFeedback>
 
-      <TouchableNativeFeedback onPress={() => {detail({sku: "test"})}}>
-        <Card type="product" title="Productnaam" sub="SKU" amount="4" />
+    { products.map((p: Product) => (
+      <TouchableNativeFeedback onPress={() => {detail(p)}}>
+        <Card type="product" title={p.name} sub={p.sku} amount={p.stock_quantity} />
       </TouchableNativeFeedback>
-
-      <TouchableNativeFeedback onPress={() => {detail({sku: "abcdef"})}}>
-        <Card type="product" title="Productnaam" sub="SKU" amount="5" />
-      </TouchableNativeFeedback>
-
-      <TouchableNativeFeedback onPress={() => {detail({sku: "123456"})}}>
-        <Card onPress={detail} type="product" title="Productnaam" sub="SKU" amount="11" />
-      </TouchableNativeFeedback>
+    ))}
     </View>
   )
 }

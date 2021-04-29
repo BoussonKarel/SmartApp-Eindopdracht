@@ -7,5 +7,6 @@ export default interface Order {
   total: number;
   order_date: Date;
   full_name: string;
+  picked_items: number;
   order_items: OrderItem[];
 }
