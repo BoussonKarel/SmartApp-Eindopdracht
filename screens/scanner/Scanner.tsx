@@ -52,7 +52,7 @@ const Scanner = ({ navigation } : any) => {
           onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
         />
         :
-        <SadPlaceholder>Kon camera niet openen.</SadPlaceholder>
+        <SadPlaceholder>Couldn't open camera.</SadPlaceholder>
       }
     </View>
   )
