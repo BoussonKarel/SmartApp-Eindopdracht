@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useState } from "react"
-import { Button, View, Text, Alert } from "react-native";
-import Snackbar from "../models/Snackbar";
-import * as Haptics from 'expo-haptics';
+import { Alert, Vibration } from "react-native";
+import Snackbar from "./Snackbar";
 
 // SNACKBAR
-const DEFAULT_SNACKBAR : Snackbar = {
+const DEFAULT_SNACKBAR = {
   show: false,
   displayText: "",
   timeOut: 2000
@@ -12,12 +11,12 @@ const DEFAULT_SNACKBAR : Snackbar = {
 
 // SUCCESS
 const userSuccess = () => {
-  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+  Vibration.vibrate([100,100,100,100]);
 }
 
 // WARNING (big errors)
 const showWarning = (warning: string) => {
-  Alert.alert(warning); Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+  Alert.alert(warning); Vibration.vibrate();
 }
 
 // FEEDBACK CONTEXT
@@ -36,7 +35,7 @@ export function useFeedback() {
 
 // Feedbac.Provider
 export function FeedbackProvider({ children } : any) {
-  const [snackbar, setSnackbar] = useState<Snackbar>(DEFAULT_SNACKBAR);
+  const [snackbar, setSnackbar] = useState(DEFAULT_SNACKBAR);
 
   const showError = (displayText: string) => {
     setSnackbar((s) => {
@@ -45,7 +44,7 @@ export function FeedbackProvider({ children } : any) {
       return { ...s}
     });
 
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    Vibration.vibrate();
 
     setTimeout(() => {
       closeError();
@@ -63,10 +62,7 @@ export function FeedbackProvider({ children } : any) {
   return (
     <FeedbackContext.Provider value={{snackbar, showError, closeError, userSuccess, showWarning}}>
       {children}
-      { snackbar.show ? <View>
-        <Text>{snackbar.displayText}</Text>
-        <Button onPress={closeError} title="Close" />
-      </View> : <></>}
+      { snackbar.show ? <Snackbar closeEvent={closeError}>{ snackbar.displayText}</Snackbar> : <></>}
     </FeedbackContext.Provider>
   )
 }
