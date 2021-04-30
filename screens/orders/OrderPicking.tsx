@@ -50,7 +50,7 @@ const OrderPicking = ({ route, navigation } : any) => {
     let item : OrderItem | undefined = order?.order_items.find((o: OrderItem) => o.sku == data);
     if(order && item) {
       if (item.picked_quantity != item.quantity) {
-        // feedback.userSuccess(`Picked [${data}]`);
+        feedback.userSuccess();
         item.picked_quantity += 1;
 
         // Update the whole order
