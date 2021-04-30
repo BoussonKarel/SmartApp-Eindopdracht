@@ -1,6 +1,5 @@
 import * as Haptics from 'expo-haptics';
 import { Alert, Vibration } from 'react-native';
-import { useSnackbar } from './SnackbarProvider';
 
 // const snackbar = useSnackbar();
 

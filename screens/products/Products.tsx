@@ -54,7 +54,7 @@ const Products = ({ navigation } : any) => {
     <View style={appStyle.container}>
 
     { products.map((p: Product) => (
-      <TouchableNativeFeedback onPress={() => {detail(p)}}>
+      <TouchableNativeFeedback key={p.id} onPress={() => {detail(p)}}>
         <Card type="product" title={p.name} sub={p.sku} amount={p.stock_quantity} />
       </TouchableNativeFeedback>
     ))}

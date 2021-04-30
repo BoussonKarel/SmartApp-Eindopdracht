@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, Vibration, Button, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Card from '../../components/Card';
+import { useFeedback } from '../../components/FeedbackProvider';
 import Loading from '../../components/Loading';
 import Order from '../../models/Order';
 import OrderItem from '../../models/OrderItem';
@@ -24,6 +25,8 @@ const OrderPicking = ({ route, navigation } : any) => {
   const [scanned, setScanned] = useState<boolean>(false);
 
   const isFocused = useIsFocused();
+
+  const feedback = useFeedback();
 
   useEffect(() => {
     // Permission for BarcodeScanner
@@ -47,18 +50,18 @@ const OrderPicking = ({ route, navigation } : any) => {
     let item : OrderItem | undefined = order?.order_items.find((o: OrderItem) => o.sku == data);
     if(order && item) {
       if (item.picked_quantity != item.quantity) {
-        feedback.userSuccess(`Picked [${data}]`);
+        // feedback.userSuccess(`Picked [${data}]`);
         item.picked_quantity += 1;
 
         // Update the whole order
         order.picked_items += 1;
       }
       else {
-        feedback.warning("Item already fully picked!")
+        feedback.showError("Item already fully picked!")
       }
     }
     else
-      feedback.error("Barcode not in order!")
+      feedback.showError("Barcode not in order!")
   }
 
   if (order)
