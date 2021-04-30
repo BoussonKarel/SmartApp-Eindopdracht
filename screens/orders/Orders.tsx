@@ -9,6 +9,7 @@ import { createOrderObject } from '../../utils/order';
 import Loading from '../../components/Loading';
 import { useFocusEffect } from '@react-navigation/native';
 import Product from '../../models/Product';
+import SadPlaceholder from '../../components/SadPlaceholder';
 
 const Orders = ({ navigation } : any) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,9 +51,7 @@ const Orders = ({ navigation } : any) => {
 
   if (loading) return ( <Loading />)
   else if (orders.length < 1) return (
-    <View style={appStyle.container}>
-      <Text>No open orders found.</Text>
-    </View>
+    <SadPlaceholder>No orders found.</SadPlaceholder>
   )
   else return (
     <View style={appStyle.container}>

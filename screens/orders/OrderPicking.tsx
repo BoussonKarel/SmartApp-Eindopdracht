@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Card from '../../components/Card';
 import { useFeedback } from '../../components/FeedbackProvider';
 import Loading from '../../components/Loading';
+import SadPlaceholder from '../../components/SadPlaceholder';
 import Order from '../../models/Order';
 import OrderItem from '../../models/OrderItem';
 import { pickingStyle } from '../../styles/components/picking';
@@ -111,7 +112,7 @@ const OrderPicking = ({ route, navigation } : any) => {
     )
   else
     return (
-      <Text>Geen order!</Text>
+      <SadPlaceholder>Order ophalen mislukt.</SadPlaceholder>
     )
 
 }

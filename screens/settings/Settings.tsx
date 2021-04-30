@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { appStyle } from '../../styles/generic';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SadPlaceholder from '../../components/SadPlaceholder';
 
 const Settings = ({ navigation } : any) => {
   const [perPage, setPerPage] = useState<number>(10);
@@ -43,8 +44,9 @@ const Settings = ({ navigation } : any) => {
 
   return (
     <View style={appStyle.container}>
-        <Text>Settings</Text>
-        <Text>Producten per pagina:</Text><Text>10</Text>
+        {/* <Text>Settings</Text>
+        <Text>Producten per pagina:</Text><Text>10</Text> */}
+        <SadPlaceholder>This page is empty (for now...)</SadPlaceholder>
     </View>
   )
 }

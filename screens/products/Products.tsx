@@ -9,6 +9,7 @@ import { woocommerce } from '../../utils/WooCommerce';
 import { createProductObject } from '../../utils/product';
 import Loading from '../../components/Loading';
 import { useFocusEffect } from '@react-navigation/core';
+import SadPlaceholder from '../../components/SadPlaceholder';
 
 const Products = ({ navigation } : any) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,9 +56,7 @@ const Products = ({ navigation } : any) => {
 
   if (loading) return ( <Loading /> )
   else if (products.length < 1) return (
-    <View style={appStyle.container}>
-      <Text>No products found.</Text>
-    </View>
+    <SadPlaceholder>No products found.</SadPlaceholder>
   )
   else return (
     <View style={appStyle.container}>
