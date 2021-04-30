@@ -77,7 +77,7 @@ const OrderPicking = ({ route, navigation } : any) => {
               style={scannerStyle.small}
             />
             :
-            <Loading />
+            <SadPlaceholder>Kon camera niet openen.</SadPlaceholder>
           }
           
         </View>

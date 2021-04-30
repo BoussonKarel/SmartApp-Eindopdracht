@@ -7,6 +7,7 @@ import { feedback } from '../../utils/ux';
 import { useFocusEffect } from '@react-navigation/core';
 import { useIsFocused } from '@react-navigation/native';
 import Loading from '../../components/Loading';
+import SadPlaceholder from '../../components/SadPlaceholder';
 
 const Scanner = ({ navigation } : any) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
@@ -51,7 +52,7 @@ const Scanner = ({ navigation } : any) => {
           onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
         />
         :
-        <Loading />
+        <SadPlaceholder>Kon camera niet openen.</SadPlaceholder>
       }
     </View>
   )

@@ -7,7 +7,7 @@ import { neutral } from '../styles/utils/colors';
 
 const SadPlaceholder = ({ children } : any) => {
   return (
-    <View style={[appStyle.container, placeHolderStyle.container]}>
+    <View style={placeHolderStyle.container}>
       <MaterialCommunityIcons name="emoticon-sad-outline" size={64} color={neutral[500]} />
       <Text style={placeHolderStyle.text}>{children}</Text>
     </View>
