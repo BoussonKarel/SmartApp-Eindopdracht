@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import Card from '../../components/Card';
 import { appStyle } from '../../styles/generic';
@@ -7,15 +7,17 @@ import { woocommerce } from '../../utils/WooCommerce';
 import Order from '../../models/Order';
 import { createOrderObject } from '../../utils/order';
 import Loading from '../../components/Loading';
+import { useFocusEffect } from '@react-navigation/native';
+import Product from '../../models/Product';
 
 const Orders = ({ navigation } : any) => {
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [orders, setOrders] = useState<Order[]>([]);
+
   const detail = ( order : Order ) => {
     navigation.navigate('Order picking', { order: order });
   }
-
-  const [orders, setOrders] = useState<Order[]>([]);
 
   const getOrders = async () => {
     setLoading(true);
@@ -36,8 +38,15 @@ const Orders = ({ navigation } : any) => {
   }
 
   useEffect(() => {
-    getOrders();
+    // getOrders();
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log("LOADING ORDER");
+      getOrders();
+    }, [])
+  );
 
   if (loading) return ( <Loading />)
   else if (orders.length < 1) return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import { appStyle } from '../../styles/generic';
 
@@ -13,11 +13,13 @@ import { useFocusEffect } from '@react-navigation/core';
 const Products = ({ navigation } : any) => {
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [products, setProducts] = useState<Product[]>([]);
+
   const detail = (product: Product) => {
     navigation.navigate('Product detail', {id: product.id});
   }
 
-  const [products, setProducts] = useState<Product[]>([]);
+  
 
   const getProducts = () => {
     setLoading(true);
@@ -32,7 +34,7 @@ const Products = ({ navigation } : any) => {
           productList.push(createProductObject(product));
       }
 
-      console.log({productList});
+      //console.log({productList});
       setProducts(productList);
 
       // Stop the loading indicator
@@ -41,8 +43,15 @@ const Products = ({ navigation } : any) => {
   }
 
   useEffect(() => {
-    getProducts();
+    // getProducts();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log("LOADING PRODUCTS");
+      getProducts();
+    }, [])
+  );
 
   if (loading) return ( <Loading /> )
   else if (products.length < 1) return (
