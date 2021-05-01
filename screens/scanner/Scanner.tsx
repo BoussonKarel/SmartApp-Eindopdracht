@@ -1,25 +1,23 @@
 import { Camera } from 'expo-camera';
 import { BarCodeScannerResult } from 'expo-barcode-scanner';
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Vibration } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import { scannerStyle } from '../../styles/components/scanner';
-import { feedback } from '../../utils/ux';
-import { useFocusEffect } from '@react-navigation/core';
 import { useIsFocused } from '@react-navigation/native';
-import Loading from '../../components/Loading';
 import SadPlaceholder from '../../components/SadPlaceholder';
+import { useFeedback } from '../../components/FeedbackProvider';
 
 const Scanner = ({ navigation } : any) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
-  const [camera, setCamera] = useState<Camera|null>(null);
-
-  const detail = (params : Object = {}) => {
-    navigation.navigate('Product detail', params);
-  }
-
   const [scanned, setScanned] = useState<boolean>(false);
 
   const isFocused = useIsFocused();
+
+  const detail = (sku: string) => {
+    navigation.navigate('Product detail', {sku: sku});
+  }
+
+  const feedback = useFeedback();
 
   // Permission for Camera
   useEffect(() => {
@@ -38,10 +36,10 @@ const Scanner = ({ navigation } : any) => {
     feedback.userSuccess();
 
     // Navigate to the product detail page
-    detail({sku: data})
+    detail(data)
   }
 
-  // TODO: Animation of the page turning blue from the bottom
+  // TODO (EXTRA): Animation of the page turning blue from the bottom
   return (
     <View style={scannerStyle.card}>
       {

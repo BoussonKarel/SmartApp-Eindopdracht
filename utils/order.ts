@@ -4,6 +4,8 @@ import OrderItem from "../models/OrderItem"
 export const createOrderObject = (fullOrder : any) : Order => {
   const orderItems : OrderItem[] = [];
 
+  let totalItems = 0;
+
   for (let lineItem of fullOrder.line_items) {
     // Als het geen bundle onderdeel is
     if (!lineItem.bundled_by || lineItem.bundled_by != "") {
@@ -19,6 +21,8 @@ export const createOrderObject = (fullOrder : any) : Order => {
         quantity: lineItem.quantity,
         sku: lineItem.sku,
       });
+
+      totalItems += lineItem.quantity;
     }
   }
 
@@ -30,6 +34,7 @@ export const createOrderObject = (fullOrder : any) : Order => {
     order_date: fullOrder.date_created,
     full_name: `${fullOrder.billing.first_name} ${fullOrder.billing.last_name}`,
     picked_items: 0,
+    total_items: totalItems,
     order_items: orderItems,
   }
 }

@@ -15,8 +15,9 @@ const userSuccess = () => {
 }
 
 // WARNING (big errors)
-const showWarning = (warning: string) => {
-  Alert.alert(warning); Vibration.vibrate();
+const showWarning = (title : string, message: string) => {
+  Alert.alert(title, message);
+  Vibration.vibrate();
 }
 
 // FEEDBACK CONTEXT

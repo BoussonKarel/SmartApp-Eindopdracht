@@ -8,5 +8,6 @@ export default interface Order {
   order_date: Date;
   full_name: string;
   picked_items: number;
+  total_items: number;
   order_items: OrderItem[];
 }

@@ -29,13 +29,33 @@ const API_get = async (endpoint : string, params : Object) : Promise<any> => {
   });
 }
 
+const API_put = async (endpoint : string, data : Object) : Promise<any> => {
+  return new Promise<any>(async (resolve, reject) => {
+    API.put(endpoint, data)
+    .then((response : any) => {
+      resolve(response);
+    })
+    .catch((error: any) => {
+      reject(error);
+    })
+  });
+}
+
 export const woocommerce = {
   get: {
     products: async (params : Object = {}) => {
       return API_get("products", params);
     },
+    product: async (id: number, params: Object = {}) => {
+      return API_get(`products/${id}`, params);
+    },
     orders: async (params : Object = {}) => {
       return API_get("orders", params);
+    }
+  },
+  put: {
+    product: async (id: number, data: Object = {}) => {
+      return API_put(`products/${id}`, data);
     }
   }
 }

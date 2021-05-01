@@ -20,8 +20,6 @@ const Products = ({ navigation } : any) => {
     navigation.navigate('Product detail', {id: product.id});
   }
 
-  
-
   const getProducts = () => {
     setLoading(true);
 
@@ -54,7 +52,9 @@ const Products = ({ navigation } : any) => {
     }, [])
   );
 
-  if (loading) return ( <Loading /> )
+  if (loading) return (
+    <Loading />
+  )
   else if (products.length < 1) return (
     <SadPlaceholder>No products found.</SadPlaceholder>
   )

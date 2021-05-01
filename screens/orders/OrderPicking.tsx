@@ -1,12 +1,11 @@
-import { useFocusEffect, useIsFocused } from '@react-navigation/core';
+import { useIsFocused } from '@react-navigation/core';
 import { BarCodeScannerResult } from 'expo-barcode-scanner';
 import { Camera } from 'expo-camera';
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Vibration, Button, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Button } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Card from '../../components/Card';
 import { useFeedback } from '../../components/FeedbackProvider';
-import Loading from '../../components/Loading';
 import SadPlaceholder from '../../components/SadPlaceholder';
 import Order from '../../models/Order';
 import OrderItem from '../../models/OrderItem';
@@ -14,8 +13,6 @@ import { pickingStyle } from '../../styles/components/picking';
 import { scannerStyle } from '../../styles/components/scanner';
 import { appStyle } from '../../styles/generic';
 import { theme } from '../../styles/utils/colors';
-import { createOrderObject } from '../../utils/order';
-import { feedback } from '../../utils/ux';
 
 const OrderPicking = ({ route, navigation } : any) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
@@ -36,33 +33,73 @@ const OrderPicking = ({ route, navigation } : any) => {
       setHasPermission(status === 'granted');
     })();
     
-    // Current order
-    route.params.order
-    ? setOrder(route.params.order)
-    : console.error("No order given!")
+    if (route.params.order) {
+      setOrder(route.params.order)
+    }
+    else {
+      navigation.goBack();
+      feedback.showWarning("Can't open order", "No order given.")
+    }
   }, []);
+
+  useEffect(() => {
+    if (order) {
+      setOrder(order => (sortByPicked(order!)))
+
+      if (order?.picked_items === order?.total_items) {
+        console.log("Order fully picked!")
+      }
+    }
+  }, [order?.picked_items])
+
+  const sortByPicked = (order: Order) : Order => {
+    order.order_items.sort(
+      (a, b) => {
+        const aFullyPicked = a.picked_quantity === a.quantity;
+        const bFullyPicked = b.picked_quantity === b.quantity;
+
+        // Allebei volledig gepickt? Gelijk = 0
+        // A volledig gepickt? Komt eerst
+        return (
+          aFullyPicked === bFullyPicked
+          ? 0
+          : (aFullyPicked ? 1 : -1)
+        )
+         
+      }
+    )
+
+    return (order);
+  }
 
   // Barcode has been scanned
   const handleBarcodeScanned = ({ type, data } : BarCodeScannerResult) => {
     setScanned(true);
     setTimeout(() => { setScanned(false) }, 1000);
 
-    // Add 1 to the picked items
-    let item : OrderItem | undefined = order?.order_items.find((o: OrderItem) => o.sku == data);
-    if(order && item) {
-      if (item.picked_quantity != item.quantity) {
-        feedback.userSuccess();
-        item.picked_quantity += 1;
+    if (order) {
+      // Welk item is gepickt?
+      let item : OrderItem | undefined = order?.order_items.find((o: OrderItem) => o.sku == data);
 
-        // Update the whole order
-        order.picked_items += 1;
+      // Item gevonden?
+      if (item) {
+        // Is het item al genoeg gescand?
+        if (item.picked_quantity != item.quantity) {
+          feedback.userSuccess();
+          item.picked_quantity += 1;
+
+          // Update the picked items qty
+          order.picked_items += 1
+        }
+        else
+          feedback.showError("Item already fully picked!")
       }
-      else {
-        feedback.showError("Item already fully picked!")
-      }
+      else
+        feedback.showError("Barcode not in order!")
     }
     else
-      feedback.showError("Barcode not in order!")
+      feedback.showWarning("Geen order", "Er is geen order geopend.") // Deze warning wordt nooit getoond, aangezien de scanner niet getoond wordt als er geen order is.
+    
   }
 
   if (order)
@@ -87,13 +124,12 @@ const OrderPicking = ({ route, navigation } : any) => {
           type="order"
           title={order.full_name}
           sub={order.order_date}
-          amount={`${order.picked_items} / ${order.order_items.length}`}
-          complete={order.picked_items == order.order_items.length} 
+          amount={`${order.picked_items} / ${order.total_items}`}
+          complete={order.picked_items == order.total_items} 
         />
 
         <ScrollView style={pickingStyle.pickingList} >
-          {/* Item uit lijst halen indien gepickt */}
-          { order.order_items.filter((i: OrderItem) => i.picked_quantity != i.quantity).map((i: OrderItem) => (
+          { order.order_items.map((i: OrderItem) => (
             <Card
               key={i.id}
               type="product"
@@ -106,7 +142,7 @@ const OrderPicking = ({ route, navigation } : any) => {
         </ScrollView>
 
         <View style={pickingStyle.buttonHolder}>
-          <Button disabled color={theme[900]} title="NEXT" onPress={() => {console.log("ORDER PICKED")}} />
+          <Button disabled={order.total_items === order.picked_items ? false : true} color={theme[900]} title="NEXT" onPress={() => {console.log("ORDER PICKED")}} />
         </View>
       </View>
     )

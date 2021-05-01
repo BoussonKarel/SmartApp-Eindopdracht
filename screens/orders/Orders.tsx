@@ -44,7 +44,7 @@ const Orders = ({ navigation } : any) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log("LOADING ORDER");
+      console.log("LOADING ORDERS");
       getOrders();
     }, [])
   );
