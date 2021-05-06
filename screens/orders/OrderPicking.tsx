@@ -72,6 +72,10 @@ const OrderPicking = ({ route, navigation } : any) => {
     return (order);
   }
 
+  const orderPicked = () => {
+    navigation.replace('Order picked', {order: order});
+  }
+
   // Barcode has been scanned
   const handleBarcodeScanned = ({ type, data } : BarCodeScannerResult) => {
     setScanned(true);
@@ -142,7 +146,7 @@ const OrderPicking = ({ route, navigation } : any) => {
         </ScrollView>
 
         <View style={pickingStyle.buttonHolder}>
-          <Button disabled={order.total_items === order.picked_items ? false : true} color={theme[900]} title="NEXT" onPress={() => {console.log("ORDER PICKED")}} />
+          <Button disabled={order.total_items === order.picked_items ? false : true} color={theme[900]} title="NEXT" onPress={orderPicked} />
         </View>
       </View>
     )

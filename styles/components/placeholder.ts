@@ -12,6 +12,8 @@ export const placeHolderStyle = StyleSheet.create({
   text: {
     marginTop: 8,
     fontSize: 20,
-    color: neutral[500]
-  }
-})
+    color: neutral[500],
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+});
