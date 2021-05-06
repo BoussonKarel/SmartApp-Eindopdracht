@@ -43,6 +43,12 @@ const OrderPicking = ({ route, navigation } : any) => {
   }, []);
 
   useEffect(() => {
+    navigation.setOptions({
+      title: `#${order?.order_number}`
+    })
+  }, [order])
+
+  useEffect(() => {
     if (order) {
       setOrder(order => (sortByPicked(order!)))
 
@@ -111,14 +117,14 @@ const OrderPicking = ({ route, navigation } : any) => {
       <View style={[pickingStyle.container, appStyle.container]}>
         <View style={[pickingStyle.pickingScanner, scannerStyle.card, scannerStyle.smallContainer]}>
           {
-            isFocused
+            isFocused && hasPermission
             ?
             <Camera
               onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
               style={scannerStyle.small}
             />
             :
-            <SadPlaceholder>Couldn't open camera.</SadPlaceholder>
+            <SadPlaceholder>Couldn't open camera.{"\n"}Please check your permissions / close other Camera apps.</SadPlaceholder>
           }
           
         </View>

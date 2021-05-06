@@ -10,34 +10,15 @@ import { appStyle } from '../../styles/generic';
 import { theme } from '../../styles/utils/colors';
 
 const KitPicking = ({ navigation } : any) => {
-  const [hasPermission, setHasPermission] = useState<boolean|any>(null);
-  const [lastBarCode, setLastBarCode] = useState<string|null>(null);
-
-  // Permission for BarcodeScanner
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
-
-  // Barcode has been scanned
-  const handleBarcodeScanned = ({ type, data } : BarCodeScannerResult) => {
-    // Make sure the barcode isn't scanned twice
-    if (data != lastBarCode) {
-      setLastBarCode(data);
-      // After 1s, the same barcode can be scanned again
-      setTimeout(() => { setLastBarCode(null) }, 1000);
-
-      // Feedback
-      console.log("Scanned product, code: " + data)
-      Vibration.vibrate()
-    }
-    else {
-      console.log("Wait before scanning the same thing again")
-    }
-  }
-
+  // TODO, IN V1.1: implement the KitPicking page, similar to the OrderPicking page
+  // GET a product (type bundle) by it's ID
+  // The bundles' items are stored in the "bundled_items" property
+  //  bundled_item {
+  //    bundled_item_id
+  //    product_id
+  //    quantity_min / quantity_max / **quantity_default**
+  //  }
+  //  ! Name is not in the object of a bundled item, so you would need to GET this too
   return (
     <SadPlaceholder>This page is not yet implemented.</SadPlaceholder>
   )

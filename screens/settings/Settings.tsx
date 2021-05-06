@@ -44,7 +44,11 @@ const Settings = ({ navigation } : any) => {
 
   return (
     <View style={appStyle.container}>
-        {/* TODO: Uitwerken settings pagina, het selecteren van meer dan 10 resultaten per keer */}
+        {/* TODO IN V1.1: Settings page
+        Now, you get 10 result by default, which is good a small test shop with < 10 orders, products
+        But if I want to use this app for real, I would need to implement this
+        
+        ALSO TODO IN V1.1: Page selector in Products, Kits, Orders... (prev/[current])/next)*/}
         <SadPlaceholder>This page is empty (for now...)</SadPlaceholder>
     </View>
   )

@@ -43,14 +43,14 @@ const Scanner = ({ navigation } : any) => {
   return (
     <View style={scannerStyle.card}>
       {
-        isFocused
+        isFocused && hasPermission
         ?
         <Camera
           style={scannerStyle.big}
           onBarCodeScanned={scanned ? undefined : handleBarcodeScanned}
         />
         :
-        <SadPlaceholder>Couldn't open camera.</SadPlaceholder>
+        <SadPlaceholder>Couldn't open camera.{"\n"}Please check your permissions / close other Camera apps.</SadPlaceholder>
       }
     </View>
   )

@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, RefreshControl } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Card from '../../components/Card';
 import Loading from '../../components/Loading';
@@ -11,6 +11,7 @@ import { woocommerce } from '../../utils/WooCommerce';
 
 const Kits = ({ navigation } : any) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false)
   const [kits, setKits] = useState<Product[]>([]);
 
   const detail = (k: Product) => {
@@ -18,8 +19,6 @@ const Kits = ({ navigation } : any) => {
   }
 
   const getKits = () => {
-    setLoading(true);
-
     woocommerce.get.products({type: 'bundle'})
     .then(response => {
       const productList : Product[] = [];
@@ -33,16 +32,19 @@ const Kits = ({ navigation } : any) => {
 
       // Stop the loading indicator
       setLoading(false);
+      setRefreshing(false);
     });
   }
 
-  useEffect(() => {
-    // getProducts();
+  const refreshEvent = useCallback(() => {
+    setRefreshing(true);
+    getKits();
   }, []);
 
   useFocusEffect(
     useCallback(() => {
       console.log("LOADING KITS");
+      setLoading(true);
       getKits();
     }, [])
   );
@@ -54,14 +56,24 @@ const Kits = ({ navigation } : any) => {
     </View>
   )
   else return (
-    <View style={appStyle.container}>
+    <FlatList
+      style={appStyle.container}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={refreshEvent} />
+      }
+      data={kits}
+      renderItem={({item} : {item: Product}) =>
+        <TouchableNativeFeedback key={item.id} onPress={() => {detail(item)}}>
+          <Card type="kit" title={item.name} sub={item.sku ? item.sku : "-"} amount={item.stock_quantity} />
+        </TouchableNativeFeedback>
+      }
+      keyExtractor={(product) => product.id.toString()}
 
-    { kits.map((k: Product) => (
-      <TouchableNativeFeedback key={k.id} onPress={() => {detail(k)}}>
-        <Card type="kit" title={k.name} sub={k.sku ? k.sku : "-"} amount={k.stock_quantity} />
-      </TouchableNativeFeedback>
-    ))}
-    </View>
+      /*
+        TODO IN V1.1: Page selector in Products, Kits, Orders... (prev/[current])/next)
+        Now it only shows the first 10 products, orders...
+      */
+    />
   )
 }
 
