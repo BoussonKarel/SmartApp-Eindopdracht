@@ -5,7 +5,6 @@ import Orders from '../screens/orders/Orders';
 import OrderPicking from '../screens/orders/OrderPicking';
 import { navigationStyle } from '../styles/components/navigation';
 import { neutral } from '../styles/utils/colors';
-import { useFocusEffect } from '@react-navigation/core';
 import OrderPickingSuccess from '../screens/orders/OrderPickingSuccess';
 
 const Stack = createStackNavigator();

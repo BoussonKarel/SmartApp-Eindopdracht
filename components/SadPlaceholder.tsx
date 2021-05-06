@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { appStyle } from '../styles/generic';
 import { placeHolderStyle } from '../styles/components/placeholder';
 import { neutral } from '../styles/utils/colors';
 

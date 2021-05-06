@@ -16,7 +16,6 @@ import { theme } from '../../styles/utils/colors';
 
 const OrderPicking = ({ route, navigation } : any) => {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
-  const [camera, setCamera] = useState<Camera|null>(null);
 
   const [order, setOrder] = useState<Order|null>(null);
 

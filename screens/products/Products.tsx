@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { RefreshControl, View } from 'react-native';
-import { appStyle } from '../../styles/generic';
+import React, { useCallback, useState } from 'react';
+import { RefreshControl } from 'react-native';
 
 import Card from '../../components/Card';
-import { FlatList, ScrollView, TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Product from '../../models/Product';
 import { woocommerce } from '../../utils/WooCommerce';
 import { createProductObject } from '../../utils/product';

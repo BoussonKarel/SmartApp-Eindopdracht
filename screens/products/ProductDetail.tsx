@@ -1,13 +1,12 @@
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Alert } from "react-native";
 import Card from "../../components/Card";
 import { useFeedback } from "../../components/FeedbackProvider";
 import Loading from "../../components/Loading";
 import Operation from "../../components/Operation";
 import SadPlaceholder from "../../components/SadPlaceholder";
 import Product from "../../models/Product";
-import { appStyle } from "../../styles/generic";
 import { createProductObject } from "../../utils/product";
 import { woocommerce } from "../../utils/WooCommerce";
 

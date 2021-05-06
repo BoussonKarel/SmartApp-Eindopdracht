@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import { useFeedback } from '../../components/FeedbackProvider';
 import Order from '../../models/Order';
 import { placeHolderStyle } from '../../styles/components/placeholder';
-import { neutral, theme } from '../../styles/utils/colors';
+import { theme } from '../../styles/utils/colors';
 
 const OrderPickingSuccess = ({ route, navigation } : any) => {
   const [order, setOrder] = useState<Order|null>(null);

@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, RefreshControl } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, Text, FlatList, RefreshControl } from 'react-native';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import Card from '../../components/Card';
 import Loading from '../../components/Loading';

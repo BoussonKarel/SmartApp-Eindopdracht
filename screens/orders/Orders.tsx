@@ -1,14 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, FlatList, RefreshControl } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import Card from '../../components/Card';
-import { appStyle } from '../../styles/generic';
 import { TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { woocommerce } from '../../utils/WooCommerce';
 import Order from '../../models/Order';
 import { createOrderObject } from '../../utils/order';
 import Loading from '../../components/Loading';
 import { useFocusEffect } from '@react-navigation/native';
-import Product from '../../models/Product';
 import SadPlaceholder from '../../components/SadPlaceholder';
 
 const Orders = ({ navigation } : any) => {

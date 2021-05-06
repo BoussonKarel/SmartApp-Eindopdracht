@@ -1,7 +1,6 @@
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text } from 'react-native';
-import { TouchableHighlight, TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler';
 import { cardStyle } from '../styles/components/card';
 import { neutral } from '../styles/utils/colors';
 

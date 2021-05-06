@@ -1,10 +1,9 @@
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import React, { ChangeEventHandler, useEffect, useState } from 'react';
-import { View, Text, Button, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
-import { TextInput, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler';
-import { cardStyle } from '../styles/components/card';
+import { MaterialIcons } from '@expo/vector-icons';
+import React from 'react';
+import { View, Button } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { operationStyle } from '../styles/components/operation';
-import { neutral, theme } from '../styles/utils/colors';
+import { theme } from '../styles/utils/colors';
 
 const Operation = ({add, subtract, onValueChange, value, onSave} : {add: any, subtract: any, onValueChange: any, value: number, onSave: any}) => {
   return (
