@@ -24,7 +24,7 @@ const Settings = ({ navigation } : any) => {
   }
 
   // Settings ophalen
-  const restoreState = async () => {
+  const restoreSettings = async () => {
     const settings = await AsyncStorage.getItem('settings');
     if (settings) {
       const { perPage } = JSON.parse(settings);
@@ -34,7 +34,7 @@ const Settings = ({ navigation } : any) => {
 
   // Settings ophalen bij het openen
   useEffect(() => {
-    restoreState();
+    restoreSettings();
   }, []);
 
   // Settings opslaan als ze wijzigen
@@ -44,8 +44,7 @@ const Settings = ({ navigation } : any) => {
 
   return (
     <View style={appStyle.container}>
-        {/* <Text>Settings</Text>
-        <Text>Producten per pagina:</Text><Text>10</Text> */}
+        {/* TODO: Uitwerken settings pagina, het selecteren van meer dan 10 resultaten per keer */}
         <SadPlaceholder>This page is empty (for now...)</SadPlaceholder>
     </View>
   )
